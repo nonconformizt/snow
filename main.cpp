@@ -11,6 +11,7 @@ int main(int argc, char ** argv)
     SDL_Surface * flake_srf = IMG_Load("../images/snowflake1.png");
 
     SDL_Texture * flake_tex = SDL_CreateTextureFromSurface(rend, flake_srf);
+    SDL_FreeSurface(flake_srf);
 
     // struct to hold the position of snowflake
     SDL_Rect flake;
