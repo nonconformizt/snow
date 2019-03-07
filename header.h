@@ -11,9 +11,9 @@
 
 using namespace std;
 
-#define WINDOW_WIDTH (720)
-#define WINDOW_HEIGHT (480)
-#define FLAKES_N 20
+#define WINDOW_WIDTH (960)
+#define WINDOW_HEIGHT (720)
+#define FLAKES_N 40
 
 class Flake {
 public:

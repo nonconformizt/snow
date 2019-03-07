@@ -8,7 +8,7 @@ void Flake::next_frame(SDL_Renderer * rend) {
     if (y >= WINDOW_HEIGHT) {
         start_x = int(drand(0.0, double(WINDOW_WIDTH)));
         x = 0;
-        y = drand(-300.0, -50.0);
+        y = drand(-WINDOW_HEIGHT, -50.0);
     } else {
         y += y_speed;
     }
@@ -23,11 +23,13 @@ void Flake::next_frame(SDL_Renderer * rend) {
 
 Flake::Flake(SDL_Renderer * rend) {
     y_speed = drand(0.8, 2.0);
-    rot_speed = drand(0.2, 2.0);
+    rot_speed = drand(-1.8, 1.8);
     curve_coef = drand(10.0, 15.0);
     curve_period = drand(0.005, 0.05);
 
-    SDL_Surface * flake_srf = IMG_Load("../images/snowflake1.png");
+    char *names[3] = {(char*)"../images/snowflake1.png", (char*)"../images/snowflake2.png", (char*)"../images/snowflake3.png"};
+    int rnd_name = rand() % 3 + 1;
+    SDL_Surface * flake_srf = IMG_Load(names[rnd_name]);
     texture = SDL_CreateTextureFromSurface(rend, flake_srf);
     SDL_FreeSurface(flake_srf);
     SDL_QueryTexture(texture, nullptr, nullptr, &rect.w, &rect.h);
@@ -36,6 +38,6 @@ Flake::Flake(SDL_Renderer * rend) {
 
     start_x = int(drand(0.0, double(WINDOW_WIDTH)));
     x = 0;
-    y = drand(-300.0, -50.0);
+    y = drand(-WINDOW_HEIGHT, -50.0);
     angle = 0;
 }
