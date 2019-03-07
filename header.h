@@ -13,13 +13,14 @@ using namespace std;
 
 #define WINDOW_WIDTH (720)
 #define WINDOW_HEIGHT (480)
+#define FLAKES_N 20
 
 class Flake {
 public:
     void next_frame(SDL_Renderer * rend);
     double drand(double from, double to);
-
-    explicit Flake(SDL_Renderer * rend);
+    Flake() { }
+    Flake(SDL_Renderer * rend);
 
 private:
     // parameters

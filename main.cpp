@@ -11,7 +11,7 @@ int main(int argc, char ** argv)
         return -1;
 
 
-    Flake flake1(rend);
+    Flake flakes[FLAKES_N] {{rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}};
 
     bool close_requested = false;
     while (!close_requested)
@@ -23,7 +23,9 @@ int main(int argc, char ** argv)
 
         SDL_RenderClear(rend);
 
-        flake1.next_frame(rend);
+        for (int i = 0; i < FLAKES_N; ++i) {
+            flakes[i].next_frame(rend);
+        }
 
         SDL_RenderPresent(rend);
         SDL_Delay(10);

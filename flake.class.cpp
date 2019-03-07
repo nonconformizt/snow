@@ -5,7 +5,13 @@ double Flake::drand(double from, double to) {
 }
 
 void Flake::next_frame(SDL_Renderer * rend) {
-    y += y_speed;
+    if (y >= WINDOW_HEIGHT) {
+        start_x = int(drand(0.0, double(WINDOW_WIDTH)));
+        x = 0;
+        y = drand(-300.0, -50.0);
+    } else {
+        y += y_speed;
+    }
     x = start_x + curve_coef * sin( curve_period * rect.y );
     angle += rot_speed;
 
@@ -16,10 +22,10 @@ void Flake::next_frame(SDL_Renderer * rend) {
 }
 
 Flake::Flake(SDL_Renderer * rend) {
-    y_speed = drand(0.5, 2.5);
+    y_speed = drand(0.8, 2.0);
     rot_speed = drand(0.2, 2.0);
-    curve_coef = drand(10.0, 35.0);
-    curve_period = drand(0.005, 0.07);
+    curve_coef = drand(10.0, 15.0);
+    curve_period = drand(0.005, 0.05);
 
     SDL_Surface * flake_srf = IMG_Load("../images/snowflake1.png");
     texture = SDL_CreateTextureFromSurface(rend, flake_srf);
@@ -28,7 +34,8 @@ Flake::Flake(SDL_Renderer * rend) {
 
     rect.w = rect.h = int(drand(15.0, 40.0));
 
-    start_x = int(drand(double(rect.w), double(WINDOW_WIDTH - rect.w)));
-    x = y = 0;
+    start_x = int(drand(0.0, double(WINDOW_WIDTH)));
+    x = 0;
+    y = drand(-300.0, -50.0);
     angle = 0;
 }
