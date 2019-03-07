@@ -28,14 +28,21 @@ int main(int argc, char ** argv)
                  curve_period = 0.02,
                  curve_coef = 40.00;
 
-
-    while (flake.y < WINDOW_HEIGHT)
+    bool close_requested = false;
+    while (!close_requested)
     {
+        SDL_Event e;
+        while (SDL_PollEvent(&e))
+            if ( e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE )
+                close_requested = true;
+
         flake.y += int(y_speed);
         flake.x = int(curve_coef * sin( curve_period * flake.y )) + (WINDOW_WIDTH - flake.w) / 2;
         angle += rot_speed;
         SDL_RenderClear(rend);
+
         SDL_RenderCopyEx(rend, flake_tex, nullptr, &flake, angle, nullptr, SDL_FLIP_NONE);
+
         SDL_RenderPresent(rend);
         SDL_Delay(10);
     }
