@@ -9,7 +9,7 @@ bool SDL_Start(SDL_Window ** window, SDL_Renderer ** renderer)
     }
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
-    *window = SDL_CreateWindow("LAB 20 Task 3",
+    *window = SDL_CreateWindow("Snow",
                                SDL_WINDOWPOS_CENTERED,
                                SDL_WINDOWPOS_CENTERED,
                                WINDOW_WIDTH,

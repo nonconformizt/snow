@@ -14,7 +14,9 @@ int main(int argc, char ** argv)
     SDL_Texture * bg = SDL_CreateTextureFromSurface(rend, bg_surf);
     SDL_FreeSurface(bg_surf);
 
-    Flake flakes[FLAKES_N] {{rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}};
+    Flake * flakes[FLAKES_N];
+    for (int i = 0; i < FLAKES_N; i++)
+        flakes[i] = new Flake(rend);
 
     bool close_requested = false,
          paused = false;
@@ -31,14 +33,14 @@ int main(int argc, char ** argv)
 
         SDL_RenderCopy(rend, bg, nullptr, nullptr);
 
-        for (int i = 0; i < FLAKES_N; ++i)
-            flakes[i].next_frame(rend, paused);
+        for (int i = 0; i < FLAKES_N; i++)
+            flakes[i]->next_frame(rend, paused);
 
         SDL_RenderPresent(rend);
         SDL_Delay(10);
     }
 
-    for (int i = 0; i < FLAKES_N; flakes[i++].destroy());
+    for (int i = 0; i < FLAKES_N; flakes[i++]->destroy());
     SDL_DestroyTexture(bg);
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(win);
