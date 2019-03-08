@@ -16,29 +16,32 @@ int main(int argc, char ** argv)
 
     Flake flakes[FLAKES_N] {{rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}, {rend}};
 
-    bool close_requested = false;
+    bool close_requested = false,
+         paused = false;
     while (!close_requested)
     {
         SDL_Event e;
         while (SDL_PollEvent(&e))
             if ( e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE )
                 close_requested = true;
+            else if ( e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_p )
+                paused = !paused;
 
         SDL_RenderClear(rend);
 
         SDL_RenderCopy(rend, bg, nullptr, nullptr);
 
         for (int i = 0; i < FLAKES_N; ++i)
-            flakes[i].next_frame(rend);
+            flakes[i].next_frame(rend, paused);
 
         SDL_RenderPresent(rend);
         SDL_Delay(10);
     }
 
-    for (int i = 0; i < FLAKES_N; ++i)
-        flakes[i].destroy();
-
-    SDL_Delay(500);
+    for (int i = 0; i < FLAKES_N; flakes[i++].destroy());
+    SDL_DestroyTexture(bg);
+    SDL_DestroyRenderer(rend);
+    SDL_DestroyWindow(win);
     IMG_Quit();
     SDL_Quit();
     return 0;

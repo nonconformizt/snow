@@ -4,19 +4,22 @@ double Flake::drand(double from, double to) {
     return (to - from) * ( (double)rand() / (double)RAND_MAX ) + from;
 }
 
-void Flake::next_frame(SDL_Renderer * rend) {
-    if (y >= WINDOW_HEIGHT) {
-        start_x = int(drand(0.0, double(WINDOW_WIDTH)));
-        x = 0;
-        y = drand(-WINDOW_HEIGHT, -50.0);
-    } else {
-        y += y_speed;
-    }
-    x = start_x + curve_coef * sin( curve_period * rect.y );
-    angle += rot_speed;
+void Flake::next_frame(SDL_Renderer * rend, bool paused) {
 
-    rect.x = int(x);
-    rect.y = int(y);
+    if(!paused) {
+        if (y >= WINDOW_HEIGHT) {
+            start_x = int(drand(0.0, double(WINDOW_WIDTH)));
+            x = 0;
+            y = drand(-WINDOW_HEIGHT, -50.0);
+        } else {
+            y += y_speed;
+        }
+        x = start_x + curve_coef * sin( curve_period * rect.y );
+        angle += rot_speed;
+
+        rect.x = int(x);
+        rect.y = int(y);
+    }
 
     SDL_RenderCopyEx(rend, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }

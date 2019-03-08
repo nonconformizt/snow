@@ -17,7 +17,7 @@ using namespace std;
 
 class Flake {
 public:
-    void next_frame(SDL_Renderer * rend);
+    void next_frame(SDL_Renderer * rend, bool paused);
     void destroy();
     double drand(double from, double to);
     Flake() { }
