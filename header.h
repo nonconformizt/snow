@@ -18,6 +18,7 @@ using namespace std;
 class Flake {
 public:
     void next_frame(SDL_Renderer * rend);
+    void destroy();
     double drand(double from, double to);
     Flake() { }
     Flake(SDL_Renderer * rend);

@@ -10,7 +10,7 @@ int main(int argc, char ** argv)
     if(!SDL_Start(&win, &rend))
         return -1;
 
-    SDL_Surface * bg_surf = IMG_Load("../images/background.jpg");
+    SDL_Surface * bg_surf = IMG_Load("images/background.jpg");
     SDL_Texture * bg = SDL_CreateTextureFromSurface(rend, bg_surf);
     SDL_FreeSurface(bg_surf);
 
@@ -35,8 +35,11 @@ int main(int argc, char ** argv)
         SDL_Delay(10);
     }
 
+    for (int i = 0; i < FLAKES_N; ++i)
+        flakes[i].destroy();
 
     SDL_Delay(500);
+    IMG_Quit();
     SDL_Quit();
     return 0;
 }

@@ -21,14 +21,18 @@ void Flake::next_frame(SDL_Renderer * rend) {
     SDL_RenderCopyEx(rend, texture, nullptr, &rect, angle, nullptr, SDL_FLIP_NONE);
 }
 
+void Flake::destroy() {
+    SDL_DestroyTexture(texture);
+}
+
 Flake::Flake(SDL_Renderer * rend) {
     y_speed = drand(0.8, 2.0);
     rot_speed = drand(-1.8, 1.8);
     curve_coef = drand(10.0, 15.0);
     curve_period = drand(0.005, 0.05);
 
-    char *names[3] = {(char*)"../images/snowflake1.png", (char*)"../images/snowflake2.png", (char*)"../images/snowflake3.png"};
-    int rnd_name = rand() % 3 + 1;
+    char *names[3] = {(char*)"images/snowflake1.png", (char*)"images/snowflake2.png", (char*)"images/snowflake3.png"};
+    int rnd_name = rand() % 3;
     SDL_Surface * flake_srf = IMG_Load(names[rnd_name]);
     texture = SDL_CreateTextureFromSurface(rend, flake_srf);
     SDL_FreeSurface(flake_srf);
